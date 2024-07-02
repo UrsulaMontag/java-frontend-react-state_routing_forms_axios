@@ -5,6 +5,10 @@
     text-align: center;
 }
 
+.app-heading {
+    color: aqua;
+}
+
 .logo {
     height: 6em;
     padding: 1.5em;

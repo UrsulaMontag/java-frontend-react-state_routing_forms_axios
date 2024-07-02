@@ -1,15 +1,25 @@
 import {Character} from "../types/RickAndMortyCharacter.ts";
 import CharacterCard from "./CharacterCard.tsx";
 import "./CharacterGallery.css";
+import {useState} from "react";
 
 type CharacterGalleryProps = {
     characters: Character[];
 }
 export default function CharacterGallery(props: Readonly<CharacterGalleryProps>) {
-    const cards = props.characters.map((character) => <CharacterCard key={character.name} character={character}/>);
+    const [searchText, setSearchText] = useState("");
+
+    const filteredCharacters: Character[] = props.characters
+        .filter((character) => character.name.toLowerCase().includes(searchText.toLowerCase()));
+
+    const cards = filteredCharacters.map((character: Character) => <CharacterCard key={character.name}
+                                                                                  character={character}/>);
     return (
         <div className="character-gallery">
-            {cards}
+            {cards.length > 0 ? <><input type="text" onChange={(e) => setSearchText(e.target.value)}
+                                         placeholder="Search for a character"/>
+                {cards}</> : <p>No characters found</p>}
+
         </div>
     );
 }
