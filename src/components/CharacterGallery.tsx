@@ -8,12 +8,13 @@ type CharacterGalleryProps = {
 }
 export default function CharacterGallery(props: Readonly<CharacterGalleryProps>) {
     const [searchText, setSearchText] = useState("");
+    let filteredCharacters: Character[] = [];
+    props.characters ?
+        filteredCharacters = props.characters
+            .filter((character) => character.name.toLowerCase().includes(searchText.toLowerCase())) : console.log(filteredCharacters);
 
-    const filteredCharacters: Character[] = props.characters
-        .filter((character) => character.name.toLowerCase().includes(searchText.toLowerCase()));
-
-    const cards = filteredCharacters.map((character: Character) => <CharacterCard key={character.name}
-                                                                                  character={character}/>);
+    const cards = filteredCharacters?.map((character: Character) => <CharacterCard key={character.name}
+                                                                                   character={character}/>);
     return (
         <div className="character-gallery">
             {cards.length > 0 ? <><input type="text" onChange={(e) => setSearchText(e.target.value)}
